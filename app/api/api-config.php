@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
-$type_request = $_REQUEST['REQUEST_METHOD'];
+$type_request = $_SERVER['REQUEST_METHOD'];
 
 extract($_POST);
 
