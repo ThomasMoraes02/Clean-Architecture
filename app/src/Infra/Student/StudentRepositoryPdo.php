@@ -6,6 +6,7 @@ use Alura\CleanArchitecture\src\Domain\Cpf;
 use Alura\CleanArchitecture\src\Domain\Student\Student;
 use Alura\CleanArchitecture\src\Domain\Student\StudentNotFound;
 use Alura\CleanArchitecture\src\Domain\Student\StudentRepository;
+use PDOException;
 
 class StudentRepositoryPdo implements StudentRepository
 {
@@ -13,6 +14,18 @@ class StudentRepositoryPdo implements StudentRepository
      * @var PDO
      */
     private $connection;
+
+    public function __construct()
+    {
+        $databasePath = __DIR__ . "/../../../database/database.sqlite";
+
+        try {
+            $this->connection = new PDO("sqlite:" . $databasePath);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 
     public function addStudent(Student $student): void
     {
@@ -92,5 +105,13 @@ class StudentRepositoryPdo implements StudentRepository
         }
 
         return array_values($students);
+    }
+
+    /**
+     * @return  PDO
+     */ 
+    public function getConnection()
+    {
+        return $this->connection;
     }
 }

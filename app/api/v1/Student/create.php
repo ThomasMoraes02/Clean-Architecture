@@ -8,7 +8,7 @@ use Alura\CleanArchitecture\src\Application\Student\StudentRegister\StudentRegis
 
 require_once __DIR__ . "/../../api-config.php";
 
-switch ($_SERVER['REQUEST_METHOD']) {
+switch ($type_request) {
     case 'POST':
         try {
             $studentRegister = new StudentRegisterDto($cpf, $name, $email);
@@ -23,7 +23,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $messageError = $e->getMessage();
         }
 
-        if(!empty($student)) {
+        if(!is_null($student)) {
             $json = json_encode(array("status" => TRUE, "message" => "Student created Successfully", "name" => $student->getName()), true);
         } else {
             $json = json_encode(array("status" => FALSE, "message" => "Student creation Failed: " . $messageError), true);
