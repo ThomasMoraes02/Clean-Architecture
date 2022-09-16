@@ -1,12 +1,13 @@
 <?php 
 namespace Alura\CleanArchitecture\src\Infra\Student;
 
+use Alura\CleanArchitecture\config\ConfigApp;
 use PDO;
+use PDOException;
 use Alura\CleanArchitecture\src\Domain\Cpf;
 use Alura\CleanArchitecture\src\Domain\Student\Student;
 use Alura\CleanArchitecture\src\Domain\Student\StudentNotFound;
 use Alura\CleanArchitecture\src\Domain\Student\StudentRepository;
-use PDOException;
 
 class StudentRepositoryPdo implements StudentRepository
 {
@@ -17,13 +18,11 @@ class StudentRepositoryPdo implements StudentRepository
 
     public function __construct()
     {
-        $databasePath = __DIR__ . "/../../../database/database.sqlite";
-
         try {
-            $this->connection = new PDO("sqlite:" . $databasePath);
+            $this->connection = ConfigApp::config()['INSTANCE_DB'];
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            echo PHP_EOL . "Error: " . $e->getMessage();
         }
     }
 
