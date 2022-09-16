@@ -5,6 +5,7 @@ use Alura\CleanArchitecture\src\Domain\Cpf;
 use Alura\CleanArchitecture\src\Infra\Student\StudentRepositoryMemory;
 use Alura\CleanArchitecture\src\Application\Student\StudentRegister\StudentRegister;
 use Alura\CleanArchitecture\src\Application\Student\StudentRegister\StudentRegisterDto;
+use Alura\CleanArchitecture\src\Infra\Student\StudentRepositoryPdo;
 
 require_once __DIR__ . "/../../api-config.php";
 
@@ -12,7 +13,7 @@ switch ($type_request) {
     case 'POST':
         try {
             $studentRegister = new StudentRegisterDto($cpf, $name, $email);
-            $repository = new StudentRepositoryMemory();
+            $repository = new StudentRepositoryPdo();
 
             $useCase = new StudentRegister($repository);
             $useCase->execute($studentRegister);

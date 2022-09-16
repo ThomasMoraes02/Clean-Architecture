@@ -100,7 +100,9 @@ class StudentRepositoryPdo implements StudentRepository
                 $students[$student['cpf']] = Student::withCpfNameAndEmail($student['cpf'], $student['name'], $student['email']);
             }
 
-            $students[$student['cpf']]->addPhone($student['ddd'], $student['number_phone']);
+            if(!empty($student['ddd'] && !empty($student['number_phone']))) {
+                $students[$student['cpf']]->addPhone($student['ddd'], $student['number_phone']);
+            }
         }
 
         return array_values($students);
