@@ -30,6 +30,10 @@ abstract class ConfigApp
             case 'mysql':
                 $configApp['INSTANCE_DB'] = new PDO('mysql:host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
                 break;
+            
+            case 'sqlite':
+                $configApp['INSTANCE_DB'] = new PDO('sqlite:' . __DIR__ . './../../database_app.sqlite');
+                break;
         }
         return $configApp;
     }
